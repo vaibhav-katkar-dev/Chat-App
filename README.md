@@ -29,7 +29,7 @@ A real-time chat application built with **Node.js**, **Express.js**, and **Socke
 
    ![Chat Interface](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/1.PNG)
 
-2. **Login Screen**  
+2. **Chats**  
    ![Chat Interface](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/2.PNG)
 
 3. **Responsive Design View**  
