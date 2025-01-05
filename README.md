@@ -25,13 +25,15 @@ A real-time chat application built with **Node.js**, **Express.js**, and **Socke
 ## Screenshots
 
 1. **Main Chat Interface**  
-   ![Chat Interface](./screenshots/chat_interface.png)
+    ![Enter Name](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/0.PNG)
+
+   ![Chat Interface](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/1.PNG)
 
 2. **Login Screen**  
-   ![Login Screen](./screenshots/login_screen.png)
+   ![Chat Interface](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/2.PNG)
 
 3. **Responsive Design View**  
-   ![Responsive Design](./screenshots/responsive_view.png)
+   ![Responsive Design](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/3.PNG)
 
 
 ## 🚦 Getting Started
@@ -45,6 +47,7 @@ cd Chat-App
 npm init -y
 npm install express socket.io
 node app.js
+```
 
 ---
 
