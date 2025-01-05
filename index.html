@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat..</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background-color: antiquewhite;
+        }
+
+        #form {
+            align-self: baseline;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            flex-wrap: nowrap;
+
+        }
+
+        #form form input {
+            height: 35px;
+            width: 40vw;
+            min-width: fit-content;
+            margin: 10px;
+            border-radius: 10px;
+            background-color: antiquewhite;
+            border: 1px solid wheat;
+            border: 1px solid rgb(155, 255, 146);
+
+        }
+        #form form input:hover{
+            border: 2px solid rgb(0, 238, 40);
+        }
+
+        #form form button {
+            height: 35px;
+            padding: 5px;
+            width: 60px;
+            margin: 5px;
+            border-radius: 10px;
+            border: 0px;
+            background-color: rgb(255, 119, 0);
+        }
+
+        #form form button:hover{
+            background-color: rgb(240, 136, 0);
+            color: white;
+            border: 1px solid red;
+            font-weight: 800;
+            padding: 10px;
+            height: fit-content;
+            width: fit-content;
+        }
+
+        .msgbox {
+            height: 60vh;
+            border: 0px solid;
+            display: flex;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+            scroll-behavior: auto;
+            border-radius: 5px;
+            background-color: rgb(230, 230, 230);
+            margin: 16px;
+            padding: 10px;
+            text-align: center;
+
+
+        }
+
+        .container h1 {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #msg p {
+            background-color: rgb(173, 228, 111);
+            padding: 5px;
+            width: fit-content;
+            font-family: Arial, Helvetica, sans-serif;
+            border-radius: 5px;
+            font-weight: 700;
+
+            
+        }
+
+        .container {
+            align-self: center;
+            display: flex;
+            border: 0px solid;
+            height: 90vh;
+            width: 80vw;
+            min-width: 40vw;
+            justify-content: center;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            flex-direction: column;
+
+        }
+
+        div {
+            border: 0px;
+        }
+
+        #h4 ,#username{
+
+            background-color: rgb(255, 166, 0);
+            color: rgb(0, 0, 0);
+            font-family: Arial, Helvetica, sans-serif;
+            width: fit-content;
+            margin: 10px;
+            border-radius: 5px;
+
+            padding: 7px;
+
+        }
+        #h4 {
+            color: rgb(0, 0, 0);
+        }
+
+       
+        .countAndUsername{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding:0 10px;
+
+            
+        }
+        #heading{
+
+            margin: 0px;
+            margin-top: 20px;
+        }
+    </style>
+
+
+    <link rel="stylesheet" href="./public/style.css">
+</head>
+
+<body>
+    
+
+    <div class="container">
+
+        <h1 id="heading">Chat Forume</h1>
+        <div class="countAndUsername"> 
+            <h4 id="h4">Online Users: 0</h4>
+            <h3 id="username"></h3>
+        </div>
+       
+        <div class="msgbox">
+            <ul id="msg"></ul>
+            <script>window.scrollTo(0, document.body.scrollHeight);</script>
+        </div>
+        <div id="form">
+            <form action="" id="form">
+                <input type="text" id="input"><button>Send</button></input>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        //connect socket//io()
+        const socket = io();
+
+
+
+
+//validat user .....
+        function cheakUser() {
+
+            user = prompt("Enter You Name.");
+            if (user) {
+                return 0;
+
+
+            }
+
+            return cheakUser();
+
+        }
+
+        cheakUser();
+
+
+
+
+
+        document.getElementById('username').innerHTML = user;
+        document.getElementById('username').style.backgroundColor = '#ffa600';
+
+
+
+        const form = document.getElementById('form');
+        const message = document.getElementById('msg');
+
+        const input = document.getElementById("input");
+
+
+
+
+
+
+
+        //if value enter send on backend 
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (input.value) {
+                let iv = input.value;
+                socket.emit("chat-message", { iv, user });
+                input.value = "";
+            }
+        });
+
+        //display chatts in chatbox
+        socket.on('chat-message', (data) => {
+
+            const item = document.createElement("p");
+            // input value=iv /msg
+            item.textContent = `${data.user}: ${data.iv}`;
+
+            message.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+            document.getElementById('username').innerHTML = data.user;
+
+        });
+
+        // count dispaly
+        let count = 0;
+        socket.on('count+', (countp) => {
+            count = count + 1;
+            document.querySelector("#h4").innerHTML = `Total Users: ${countp}`;
+        })
+        socket.on('count-', (countm) => {
+            count = count - 1;
+            document.querySelector("#h4").innerHTML = `Total Users: ${countm}`;
+
+        })
+        // old chat display
+        socket.on('chat-history', (chats) => {
+            const message_old = document.getElementById('msg');
+            for (chat of chats) {
+                let username = chat.user;
+                let message = chat.msg;
+                const oldChats = document.createElement("p");
+
+                oldChats.textContent = `${username}: ${message}`;
+
+                message_old.appendChild(oldChats);
+
+                console.log(username, " :", message);
+            }
+            console.log(chats);
+
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>
