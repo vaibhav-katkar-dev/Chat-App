@@ -33,7 +33,7 @@ A real-time chat application built with **Node.js**, **Express.js**, and **Socke
    ![Chat Interface](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/2.PNG)
 
 3. **Responsive Design View**  
-   ![Responsive Design](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/3.PNG)
+   ![Responsive Design](https://raw.githubusercontent.com/vaibhav-katkar-dev/Chat-App/refs/heads/main/screenshots/Cha3.PNG)
 
 
 ## 🚦 Getting Started
